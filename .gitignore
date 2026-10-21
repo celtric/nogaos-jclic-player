@@ -34,3 +34,8 @@ lib/bootstrap/*/rt.jar
 /nbeans/dist/
 /nbeans/build/
 
+
+# Maven and IDE output of the NoGaOS build (see NOGAOS.md) #
+target/
+.idea/
+*.iml

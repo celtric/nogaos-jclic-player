@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.celtric.nogaos</groupId>
+    <artifactId>nogaos-jclic-player</artifactId>
+    <version>0.3.2.18-nogaos.1</version>
+
+    <name>NoGaOS JClic player</name>
+    <description>The JClic player (upstream's jclic.jar: the edu.xtec core plus the libraries its Ant build bundles), built with Maven from an unmodified upstream source tree and published to GitHub Packages for the NoGaOS JClic app. See NOGAOS.md.</description>
+    <url>https://github.com/celtric/nogaos-jclic-player</url>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License v2.0 or later</name>
+            <url>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/celtric/nogaos-jclic-player.git</connection>
+        <url>https://github.com/celtric/nogaos-jclic-player</url>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/celtric/nogaos-jclic-player</url>
+        </repository>
+    </distributionManagement>
+
+    <properties>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+        <!-- The layout is upstream's, untouched, so upstream can be merged in: the same source roots, resources and
+             exclusions as the "core" and "jclicplayer" targets of build.xml, expressed for Maven. -->
+        <sourceDirectory>src/core</sourceDirectory>
+        <resources>
+            <!-- build.xml filters the @JCLIC_VERSION@-style tokens of the property files from project.properties. -->
+            <resource>
+                <directory>src/core</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>edu/xtec/resources/**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/core</directory>
+                <includes>
+                    <include>edu/xtec/resources/**</include>
+                </includes>
+                <excludes>
+                    <exclude>**/*.java</exclude>
+                    <exclude>**/*.form</exclude>
+                    <exclude>**/*.properties</exclude>
+                </excludes>
+            </resource>
+            <resource>
+                <directory>extensions/soundspi/javalayer/src</directory>
+                <includes>
+                    <include>**/*.ser</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>extensions/soundspi/catalog</directory>
+                <includes>
+                    <include>META-INF/services/javax.sound.sampled.spi.*</include>
+                    <include>META-INF/services/javax.sound.midi.spi.*</include>
+                </includes>
+            </resource>
+        </resources>
+        <filters>
+            <filter>project.properties</filter>
+        </filters>
+
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <id>add-bundled-library-sources</id>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <sources>
+                                <!-- Compiled into jclic.jar by build.xml -->
+                                <source>extensions/xml/jdom-1.0/src</source>
+                                <source>extensions/xml/customJdom-1.0/src</source>
+                                <source>extensions/json/src</source>
+                                <source>extensions/dbconn/src</source>
+                                <source>extensions/soundspi/tritonus/src</source>
+                                <source>extensions/soundspi/javalayer/src</source>
+                                <source>extensions/soundspi/MpegAudioSPI/src</source>
+                                <source>extensions/soundspi/jorbis/src</source>
+                                <source>extensions/img/image4j/src</source>
+                                <!-- Compile-only stubs of the Java Media Framework and QuickTime for Java (see their
+                                     README.txt), kept out of the jar below as upstream keeps them out of jclic.jar -->
+                                <source>lib/jmf-api/src</source>
+                                <source>lib/qtjava-api/src</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.1</version>
+                <configuration>
+                    <showWarnings>false</showWarnings>
+                    <showDeprecation>false</showDeprecation>
+                    <excludes>
+                        <!-- Upstream builds JDOM without XPath -->
+                        <exclude>org/jdom/xpath/**</exclude>
+                        <!-- The default-package launchers of the standalone player, applet and installer: this
+                             artifact is a library embedded by a host, which has its own entry point -->
+                        <exclude>JClicPlayer.java</exclude>
+                        <exclude>JClicApplet.java</exclude>
+                        <exclude>JClicInstaller.java</exclude>
+                    </excludes>
+                    <compilerArgs>
+                        <arg>-nowarn</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <excludes>
+                        <exclude>com/sun/media/**</exclude>
+                        <exclude>javax/media/**</exclude>
+                        <exclude>quicktime/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <!-- The sources travel with the binary, as the GPL asks -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.4</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
