@@ -1,5 +1,6 @@
-# Every push and pull request builds the player. A tag v<version> (matching the POM version) also publishes the jar
-# and its sources to this repository's GitHub Packages Maven repository, which the NoGaOS build consumes.
+# Every push and pull request builds the player and the bundle. A tag v<version> (matching the POM version) also
+# publishes the artifacts to this repository's GitHub Packages Maven repository and creates a GitHub release whose
+# assets are the bundle NoGaOS downloads at first use, the sources jars and the licence.
 name: Build
 
 on:
@@ -9,7 +10,7 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
   packages: write
 
 jobs:
@@ -40,3 +41,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./mvnw -B --no-transfer-progress deploy -DskipTests
+      - name: Create the GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # The bundle's SHA-256 goes into the notes: the NoGaOS app pins it and refuses any other download.
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          bundle="embedded/target/nogaos-jclic-embedded-${version}.jar"
+          test -f "$bundle"
+          sha=$(sha256sum "$bundle" | cut -d' ' -f1)
+          echo "$sha  $(basename "$bundle")" > "embedded/target/nogaos-jclic-embedded-${version}.jar.sha256"
+          notes="JClic player ${version}, built from the unmodified upstream source tree in this repository (GPL-2.0-or-later).
+
+\`nogaos-jclic-embedded-${version}.jar\` is the bundle the NoGaOS JClic app downloads at first use; its SHA-256 is \`${sha}\`. The sources jars and \`LICENSE\` are the corresponding source."
+          gh release create "$GITHUB_REF_NAME" --title "JClic player ${version}" --notes "$notes" \
+            "$bundle" "embedded/target/nogaos-jclic-embedded-${version}.jar.sha256" \
+            embedded/target/nogaos-jclic-embedded-${version}-sources.jar \
+            player/target/nogaos-jclic-player-${version}-sources.jar LICENSE

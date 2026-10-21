@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.celtric.nogaos</groupId>
+        <artifactId>nogaos-jclic</artifactId>
+        <version>0.3.2.18-nogaos.2</version>
+    </parent>
+
+    <artifactId>nogaos-jclic-embedded</artifactId>
+
+    <name>NoGaOS JClic player bundle</name>
+    <description>The JClic player with the glue that lets it live inside a NoGaOS window, in one jar the NoGaOS JClic app downloads at first use and loads in a class loader of its own. GPL-2.0-or-later as a whole.</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.celtric.nogaos</groupId>
+            <artifactId>nogaos-jclic-player</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.celtric.nogaos</groupId>
+            <artifactId>nogaos-jclic-contract</artifactId>
+            <version>${project.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/..</directory>
+                <targetPath>META-INF</targetPath>
+                <includes>
+                    <include>LICENSE</include>
+                    <include>CREDITS.txt</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <!-- One jar: the player and the glue, with the sound SPI service files merged -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

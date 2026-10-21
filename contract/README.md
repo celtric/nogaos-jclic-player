@@ -1,0 +1,3 @@
+# The app–bundle contract
+
+The three interfaces in `src/main/java/org/celtric/nogaos/app/jclic/player/` are the whole of what the NoGaOS JClic app (MIT) and the player bundle built here (GPL) share. They are copied verbatim from `apps/nogaos-app-jclic/src/main/java/org/celtric/nogaos/app/jclic/player/` in the [NoGaOS repository](https://github.com/celtric/noga-os) and stay under that repository's MIT licence (`LICENSE` here). The bundle compiles against them and never ships them: at run time the app's own copies, loaded by the app, are the ones the bundle's classes see. When the app changes them, copy them over again and bump the version.

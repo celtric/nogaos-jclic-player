@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.celtric.nogaos</groupId>
+        <artifactId>nogaos-jclic</artifactId>
+        <version>0.3.2.18-nogaos.2</version>
+    </parent>
+
+    <artifactId>nogaos-jclic-contract</artifactId>
+
+    <name>NoGaOS JClic contract</name>
+    <description>The three interfaces NoGaOS's JClic app and the player bundle share, copied verbatim from the app (MIT); the bundle compiles against them and never ships them.</description>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/license/mit</url>
+        </license>
+    </licenses>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jspecify</groupId>
+            <artifactId>jspecify</artifactId>
+        </dependency>
+    </dependencies>
+</project>
