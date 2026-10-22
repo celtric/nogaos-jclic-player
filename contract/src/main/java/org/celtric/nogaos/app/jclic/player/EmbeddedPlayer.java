@@ -35,4 +35,13 @@ public interface EmbeddedPlayer {
 
     /** Frees everything for good, when the window closes. On the EDT. */
     void dispose();
+
+    /**
+     * The open project's own page as JClic's About shows it: title, authors, organizations, revisions, languages,
+     * description, descriptors and the activity on screen, as an HTML document. Null when no project is open, or
+     * from a bundle older than this method. On the EDT.
+     */
+    default @Nullable String projectInfo() {
+        return null;
+    }
 }

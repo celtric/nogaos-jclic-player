@@ -22,7 +22,9 @@ import edu.xtec.jclic.bags.ActivityBagElement;
 import edu.xtec.jclic.fileSystem.FileSystem;
 import edu.xtec.jclic.fileSystem.MemoryZip;
 import edu.xtec.jclic.project.JClicProject;
+import edu.xtec.jclic.skins.AboutWindow;
 import edu.xtec.jclic.skins.Skin;
+import edu.xtec.util.Html;
 import edu.xtec.util.LFUtil;
 import edu.xtec.util.Messages;
 import edu.xtec.util.Options;
@@ -116,6 +118,25 @@ final class UpstreamPlayer extends Player implements EmbeddedPlayer {
         getHistory().clearHistory();
         current = null;
         setProject(null);
+    }
+
+    /** The current project's page, assembled the way {@link edu.xtec.jclic.skins.AboutWindow#buildStandardTab} does. */
+    @Override
+    public String projectInfo() {
+        if (project == null) {
+            return null;
+        }
+        final StringBuilder content = new StringBuilder(4096);
+        content.append(messages.get("about_window_html_header"));
+        content.append("<br><b>").append(messages.get("about_window_projectInfo")).append("</b><hr>");
+        content.append(project.settings.toHtmlString(messages));
+        if (actPanel != null) {
+            content.append(Html.BR).append(actPanel.getActivity().toHtmlString(this));
+        }
+        final String table = Html.table(content.substring(0), "100%", 0, 5, -1,
+                messages.get("about_window_html_style"), true);
+        return UpstreamPlayerFactory.absolutePictures(Html.getHtmlDoc(table, messages.get("about_window_html_bgcolor")),
+                AboutWindow.getAboutUrlBase());
     }
 
     @Override

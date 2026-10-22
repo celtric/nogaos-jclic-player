@@ -4,7 +4,7 @@
 
     <groupId>org.celtric.nogaos</groupId>
     <artifactId>nogaos-jclic</artifactId>
-    <version>0.3.2.18-nogaos.2</version>
+    <version>0.3.2.18-nogaos.3</version>
     <packaging>pom</packaging>
 
     <name>NoGaOS JClic</name>
