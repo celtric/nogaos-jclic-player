@@ -1,4 +1,4 @@
-package org.celtric.nogaos.app.jclic.player;
+package org.nogaos.app.jclic.player;
 
 import org.jspecify.annotations.Nullable;
 

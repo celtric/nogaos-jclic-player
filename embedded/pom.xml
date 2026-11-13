@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.celtric.nogaos</groupId>
+        <groupId>org.nogaos</groupId>
         <artifactId>nogaos-jclic</artifactId>
-        <version>0.3.2.18-nogaos.3</version>
+        <version>0.3.2.18-nogaos.4</version>
     </parent>
 
     <artifactId>nogaos-jclic-embedded</artifactId>
@@ -15,12 +15,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.celtric.nogaos</groupId>
+            <groupId>org.nogaos</groupId>
             <artifactId>nogaos-jclic-player</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.celtric.nogaos</groupId>
+            <groupId>org.nogaos</groupId>
             <artifactId>nogaos-jclic-contract</artifactId>
             <version>${project.version}</version>
             <scope>provided</scope>

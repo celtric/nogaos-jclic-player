@@ -14,7 +14,7 @@
  * GNU General Public License for more details (see the LICENSE file).
  */
 
-package org.celtric.nogaos.jclic.embedded;
+package org.nogaos.jclic.embedded;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;

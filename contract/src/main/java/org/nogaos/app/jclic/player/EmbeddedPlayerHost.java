@@ -1,4 +1,4 @@
-package org.celtric.nogaos.app.jclic.player;
+package org.nogaos.app.jclic.player;
 
 /** What an {@link EmbeddedPlayer} asks of the window it lives in. Every method is called on the EDT. */
 public interface EmbeddedPlayerHost {

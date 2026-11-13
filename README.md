@@ -1,4 +1,4 @@
-> **NoGaOS fork:** this repository publishes the JClic player as a Maven artifact for [NoGaOS](https://github.com/celtric/noga-os); see [NOGAOS.md](NOGAOS.md). Everything below is upstream's README.
+> **NoGaOS fork:** this repository publishes the JClic player as a Maven artifact for [NoGaOS](https://github.com/celtric/nogaos); see [NOGAOS.md](NOGAOS.md). Everything below is upstream's README.
 
 [JClic](http://clic.xtec.cat) - Player and authoring tool for educational activities
 ====================================================================================

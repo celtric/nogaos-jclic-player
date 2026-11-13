@@ -14,7 +14,7 @@
  * GNU General Public License for more details (see the LICENSE file).
  */
 
-package org.celtric.nogaos.jclic.embedded;
+package org.nogaos.jclic.embedded;
 
 import edu.xtec.jclic.Constants;
 import edu.xtec.jclic.skins.AboutWindow;
@@ -27,9 +27,9 @@ import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.celtric.nogaos.app.jclic.player.EmbeddedPlayer;
-import org.celtric.nogaos.app.jclic.player.EmbeddedPlayerFactory;
-import org.celtric.nogaos.app.jclic.player.EmbeddedPlayerHost;
+import org.nogaos.app.jclic.player.EmbeddedPlayer;
+import org.nogaos.app.jclic.player.EmbeddedPlayerFactory;
+import org.nogaos.app.jclic.player.EmbeddedPlayerHost;
 
 import java.awt.Component;
 

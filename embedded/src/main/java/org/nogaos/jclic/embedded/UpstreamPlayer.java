@@ -14,7 +14,7 @@
  * GNU General Public License for more details (see the LICENSE file).
  */
 
-package org.celtric.nogaos.jclic.embedded;
+package org.nogaos.jclic.embedded;
 
 import edu.xtec.jclic.Constants;
 import edu.xtec.jclic.Player;
@@ -28,8 +28,8 @@ import edu.xtec.util.Html;
 import edu.xtec.util.LFUtil;
 import edu.xtec.util.Messages;
 import edu.xtec.util.Options;
-import org.celtric.nogaos.app.jclic.player.EmbeddedPlayer;
-import org.celtric.nogaos.app.jclic.player.EmbeddedPlayerHost;
+import org.nogaos.app.jclic.player.EmbeddedPlayer;
+import org.nogaos.app.jclic.player.EmbeddedPlayerHost;
 import org.jdom.Document;
 
 import javax.swing.JComponent;

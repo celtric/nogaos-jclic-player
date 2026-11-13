@@ -1,16 +1,16 @@
 # The JClic player for NoGaOS
 
-This is a fork of [projectestac/jclic](https://github.com/projectestac/jclic) whose only purpose is to build the JClic **player** for the JClic app of [NoGaOS](https://github.com/celtric/noga-os). Branch `master` is upstream's, untouched; branch `nogaos` (the default) adds the Maven build on top of it and is where upstream is merged into.
+This is a fork of [projectestac/jclic](https://github.com/projectestac/jclic) whose only purpose is to build the JClic **player** for the JClic app of [NoGaOS](https://github.com/celtric/nogaos). Branch `master` is upstream's, untouched; branch `nogaos` (the default) adds the Maven build on top of it and is where upstream is merged into.
 
 NoGaOS is MIT and ships no GPL code: its JClic app downloads the **player bundle** released here at first use, keeps it in the user's cache and loads it in a class loader of its own, so the two stay separate programs, each under its own licence, and the combination happens on the user's machine. The app pins the bundle's version and SHA-256 and refuses any other download. Three Maven modules:
 
-- `player/` — upstream's `jclic.jar` built by Maven, `org.celtric.nogaos:nogaos-jclic-player` (GPL).
+- `player/` — upstream's `jclic.jar` built by Maven, `org.nogaos:nogaos-jclic-player` (GPL).
 - `contract/` — the three interfaces the app and the bundle share, copied verbatim from the app and MIT like it (see its README); the bundle compiles against them and never ships them.
 - `embedded/` — the glue that lets the player live inside a NoGaOS window (`UpstreamPlayer`, found by the app through `ServiceLoader`), shaded with the player into the one jar `nogaos-jclic-embedded-<version>.jar` that every GitHub release carries, next to its SHA-256, the sources jars and the licence (GPL as a whole).
 
 ## What the player artifact is
 
-`org.celtric.nogaos:nogaos-jclic-player` is upstream's `jclic.jar` built by Maven instead of Ant: the `edu.xtec` player core from `src/core` plus the libraries the `core` and `jclicplayer` targets of `build.xml` compile into that jar (JDOM 1.0 without XPath and JClic's `SpecialXMLOutputter`, the Android-derived `org.json`, `dbconn`, image4j, and the Tritonus, JLayer, MP3SPI and JOrbis sound SPIs with their `META-INF/services` entries). The compile-only JMF and QuickTime stubs under `lib/` are compiled against and, as in upstream's jar, left out of the artifact. The source tree is upstream's layout, read in place by `player/pom.xml`; the version tokens of `commonSettings.properties` are filled from `project.properties` as the Ant build does. A sources jar is published next to the binary.
+`org.nogaos:nogaos-jclic-player` is upstream's `jclic.jar` built by Maven instead of Ant: the `edu.xtec` player core from `src/core` plus the libraries the `core` and `jclicplayer` targets of `build.xml` compile into that jar (JDOM 1.0 without XPath and JClic's `SpecialXMLOutputter`, the Android-derived `org.json`, `dbconn`, image4j, and the Tritonus, JLayer, MP3SPI and JOrbis sound SPIs with their `META-INF/services` entries). The compile-only JMF and QuickTime stubs under `lib/` are compiled against and, as in upstream's jar, left out of the artifact. The source tree is upstream's layout, read in place by `player/pom.xml`; the version tokens of `commonSettings.properties` are filled from `project.properties` as the Ant build does. A sources jar is published next to the binary.
 
 The authoring tool (`src/author`), the reports server (`src/report`) and the default-package launchers (`JClicPlayer`, `JClicApplet`, `JClicInstaller`) are not in the artifact: it is a library a host embeds through `edu.xtec.jclic.Player`, not a program.
 
